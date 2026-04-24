@@ -19,3 +19,9 @@ models/*
 
 # Jupyter
 .ipynb_checkpoints
+docs/MEMORIA_P4.tex
+docs/*.pdf
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.toc

@@ -1,33 +1,36 @@
 # Configuración de Adquisición de Datos Forenses
 # Proyecto: Health-CIB-ES (PEC 4)
+# Enfoque: Detección de identidades vinculadas (X + Telegram)
 
 search_params:
-  # Términos semilla para detectar coordinación en pseudociencia/salud
   query_terms:
     - "biodecodificación cáncer"
-    - "cura milagrosa autismo"
     - "mms salud original"
     - "grafeno vacunas españa"
-    - "bicarbonato cura oncología"
-  
-  # Hashtags frecuentes en redes de desinformación coordinada
+    - "clorito de sodio cura"
   hashtags:
     - "#SaludNatural"
     - "#CuraAlternativa"
-    - "#Despierta"
-    - "#LibertadSalud"
+    - "#MedicinaIntegrativa"
 
 platforms:
   twitter:
     enabled: true
     max_results_per_query: 100
+    extract_metadata: true # Device, account age, etc.
   telegram:
     enabled: true
     channels:
       - "SaludSinCensura"
       - "InfoVacunasReal"
+      - "CurasMilagrosas"
 
 data_quality:
-  download_images: true
-  min_text_length: 30
+  download_infographics: true
+  min_text_length: 20
   save_format: "jsonl"
+
+processing:
+  stylometric_analysis: true # RoBERTa
+  visual_similarity: true    # CLIP for infographics
+  behavioral_clustering: true # Temporal & source analysis
