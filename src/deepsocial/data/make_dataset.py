@@ -1,70 +1,64 @@
+import yaml
 import json
 import time
 from pathlib import Path
 from typing import List, Dict, Any
-import pandas as pd
 from loguru import logger
 
-class HealthDisinfoCollector:
+class DatasetAcquisitionEngine:
     """
-    Recolector para el análisis de campañas de desinformación en el ámbito de la salud.
-    Objetivo: Identificar patrones de comportamiento coordinado inauténtico.
+    Motor de adquisición de datos basado en configuración.
+    Implementa un protocolo de recolección multifuente para detectar 
+    comportamiento coordinado.
     """
     
-    def __init__(self, output_dir: str = "data/raw"):
-        self.output_dir = Path(output_dir)
-        self.images_dir = self.output_dir / "images"
-        self.images_dir.mkdir(parents=True, exist_ok=True)
-        logger.info(f"HealthCollector listo. Datos en {self.output_dir}")
+    def __init__(self, config_path: str = "configs/search_config.yaml"):
+        self.config = self._load_config(config_path)
+        self.output_dir = Path("data/raw")
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        logger.info("Motor de adquisición inicializado correctamente.")
 
-    def collect_account_data(self, account_handle: str, platform: str = "twitter") -> Dict[str, Any]:
-        """
-        Simula la recolección de datos multifuente y comportamiento.
-        En producción, aquí se integrarían las APIs de X o scrapers de Telegram.
-        """
-        logger.info(f"Analizando comportamiento de la cuenta: {account_handle}")
-        
-        # Estructura de datos diseñada para detectar coordinación
-        data = {
-            "account_info": {
-                "handle": account_handle,
-                "platform": platform,
-                "creation_date": "2024-01-01", # Las redes coordinadas suelen crearse en masa
-            },
-            "posts": [
-                {
-                    "post_id": "p1",
-                    "text": "Descubre el secreto del bicarbonato para curar todo. #saludnatural",
-                    "timestamp": "2026-04-23T10:00:01Z",
-                    "media_path": str(self.images_dir / f"{account_handle}_p1.jpg"),
-                    "metadata": {
-                        "source": "Twitter Web App",
-                        "retweet_count": 45,
-                        "is_identical_to_others": True # Señal de coordinación
-                    }
-                }
-            ]
-        }
-        return data
+    def _load_config(self, path: str) -> Dict[str, Any]:
+        with open(path, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f)
 
-    def save_batch(self, data_list: List[Dict[str, Any]], batch_name: str):
-        """Guarda un lote de datos en formato JSON y prepara el CSV para análisis rápido."""
-        file_path = self.output_dir / f"{batch_name}.json"
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(data_list, f, indent=4, ensure_ascii=False)
+    def run_pipeline(self):
+        """Ejecuta el flujo completo de recolección definido en el YAML."""
+        terms = self.config['search_params']['query_terms']
+        hashtags = self.config['search_params']['hashtags']
         
-        logger.success(f"Lote '{batch_name}' guardado con éxito.")
+        logger.info(f"Iniciando recolección para {len(terms)} términos y {len(hashtags)} hashtags.")
+        
+        all_data = []
+        # Simulación de recolección multifuente (Twitter + Telegram)
+        for term in terms:
+            logger.info(f"Buscando rastro de coordinación para: {term}")
+            # Aquí se llamaría a los módulos de scraping reales (ntscraper/telethon)
+            sample_results = self._mock_collection(term)
+            all_data.extend(sample_results)
+            time.sleep(0.5)
+
+        self._save_results(all_data)
+
+    def _mock_collection(self, query: str) -> List[Dict[str, Any]]:
+        """Genera una estructura de datos real para validar el pipeline."""
+        return [
+            {
+                "query": query,
+                "platform": "twitter",
+                "content": f"Resultado simulado sobre {query}",
+                "timestamp": "2026-04-23T12:00:00Z",
+                "coordinated_score_preliminary": 0.0
+            }
+        ]
+
+    def _save_results(self, data: List[Dict[str, Any]]):
+        output_file = self.output_dir / "health_cib_dataset.jsonl"
+        with open(output_file, "w", encoding="utf-8") as f:
+            for entry in data:
+                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        logger.success(f"Dataset guardado en {output_file}")
 
 if __name__ == "__main__":
-    collector = HealthDisinfoCollector()
-    
-    # Ejemplo de cuentas que simulan una red coordinada de pseudociencia
-    seeds = ["salud_total_es", "bio_vida_natural", "medicina_alternativa_real"]
-    
-    batch_data = []
-    for seed in seeds:
-        data = collector.collect_account_data(seed)
-        batch_data.append(data)
-        time.sleep(1) # Respetar límites de rate-limiting (buena práctica)
-        
-    collector.save_batch(batch_data, "health_pseudoscience_coordinated_batch_01")
+    engine = DatasetAcquisitionEngine()
+    engine.run_pipeline()

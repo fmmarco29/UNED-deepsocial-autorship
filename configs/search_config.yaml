@@ -1,0 +1,33 @@
+# Configuración de Adquisición de Datos Forenses
+# Proyecto: Health-CIB-ES (PEC 4)
+
+search_params:
+  # Términos semilla para detectar coordinación en pseudociencia/salud
+  query_terms:
+    - "biodecodificación cáncer"
+    - "cura milagrosa autismo"
+    - "mms salud original"
+    - "grafeno vacunas españa"
+    - "bicarbonato cura oncología"
+  
+  # Hashtags frecuentes en redes de desinformación coordinada
+  hashtags:
+    - "#SaludNatural"
+    - "#CuraAlternativa"
+    - "#Despierta"
+    - "#LibertadSalud"
+
+platforms:
+  twitter:
+    enabled: true
+    max_results_per_query: 100
+  telegram:
+    enabled: true
+    channels:
+      - "SaludSinCensura"
+      - "InfoVacunasReal"
+
+data_quality:
+  download_images: true
+  min_text_length: 30
+  save_format: "jsonl"
