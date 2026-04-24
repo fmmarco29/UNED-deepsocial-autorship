@@ -1,0 +1,20 @@
+# Lista de cuentas y canales para el experimento Health-CIB-ES
+
+control_group:
+  twitter:
+    - "SaludPublicaEs"
+    - "sanidadgob"
+    - "SaludSinBulos"
+
+investigation_group:
+  twitter:
+    - "bio_vida_natural" # Ejemplo de cuenta de pseudociencia
+    - "vacunas_libres"   # Ejemplo temático
+  telegram_channels:
+    - "laquintacolumna"
+    - "info_vacunas"
+
+keywords_to_track:
+  - "biodecodificación"
+  - "clorito de sodio"
+  - "grafeno vacunas"
