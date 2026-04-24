@@ -4,28 +4,21 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 
-Este repositorio contiene el desarrollo de la PEC 4 del Máster en Investigación en IA (IAI). El proyecto implementa un sistema dual para la detección de **comportamiento coordinado inauténtico** (CIB) y la clasificación de **noticias falsas** (Fake News) en el ámbito de la salud.
+Este repositorio contiene el desarrollo de la PEC 4 del Máster en Investigación en IA (IAI). El proyecto implementa un sistema para la detección de **Comportamiento Coordinado Inauténtico (CIB)** y la clasificación de **noticias falsas** en salud.
 
-## Objetivos
-- **Detección de Veracidad:** Clasificación de contenidos de salud mediante modelos transformadores especializados en Fake News (español).
-- **Detección de Autoría:** Identificación de identidades vinculadas (*sockpuppets*) mediante estilometría profunda con RoBERTa.
-- **Análisis Multimodal:** Detección de coordinación visual en infografías mediante modelos CLIP.
-- **Análisis Multifuente:** Estudio de la propagación coordinada entre Twitter/X y Telegram.
-- **Modelado Comportamental:** Identificación de ráfagas temporales y sincronización técnica de cuentas.
+### ¿Qué es CIB (Coordinated Inauthentic Behavior)?
+El **CIB** se refiere a campañas organizadas donde grupos de cuentas o páginas colaboran de forma síncrona para engañar a los usuarios sobre su identidad o sus objetivos. En este proyecto, el foco no es solo el contenido del mensaje, sino la **coordinación técnica** entre múltiples autores en diferentes plataformas.
 
-## Stack Tecnológico
-- **Lenguaje:** Python 3.11+
-- **Modelos:** 
-  - NLP Veracidad: `roberta-base-bne-fake-news-detection`.
-  - NLP Estilometría: `roberta-base-bne` (Representación densa).
-  - Vision: `OpenCLIP` (Similitud semántica de imágenes).
-- **MLOps:** `uv` para gestión de dependencias, `Ruff` para calidad de código y GitHub Actions para CI/CD.
+## Objetivos del Proyecto
+- **Detección de CIB:** Identificación de patrones de coordinación técnica, ráfagas temporales y sincronización de dispositivos.
+- **Identidades Vinculadas (Sockpuppets):** Uso de estilometría profunda (RoBERTa) para vincular cuentas aparentemente independientes.
+- **Análisis Multimodal y Multifuente:** Alineación de señales de **Twitter/X** y **Telegram** mediante similitud semántica visual (CLIP) y lingüística.
+- **Clasificación de Veracidad:** Detección de Fake News en salud mediante modelos transformadores SOTA.
 
-## Estructura del Proyecto
-- `src/deepsocial/data`: Motores de adquisición multifuente y protocolos de ingesta.
-- `src/deepsocial/features`: Extractores de rasgos (Veracidad, Estilometría, Visual, Comportamiento).
-- `src/deepsocial/models`: Motores de fusión de señales y generación de reportes forenses.
-- `configs/`: Gestión centralizada de parámetros de investigación.
+## Estructura del Sistema
+- `src/deepsocial/data`: Motores de ingesta y alineación de fuentes (X + Telegram).
+- `src/deepsocial/features`: Extractores de rasgos (Estilometría, Visual CLIP, Comportamiento Temporal, Veracidad).
+- `src/deepsocial/models`: Motor de fusión de señales y generación de informes de riesgo.
 
 ## Instalación rápida
 ```bash
@@ -35,4 +28,4 @@ source .venv/bin/activate
 ```
 
 ---
-*Investigación académica sobre desinformación y comportamiento coordinado en salud.*
+*Investigación académica sobre desinformación y comportamiento coordinado en el ámbito de la salud.*
