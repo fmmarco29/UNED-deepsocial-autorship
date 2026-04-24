@@ -1,7 +1,7 @@
 [project]
 name = "deepsocial-authorship"
 version = "0.1.0"
-description = "Detección de autoría coordinada y análisis multimodal en redes sociales para el proyecto DeepSocial (PEC4)."
+description = "Detección de autoría coordinada y análisis de veracidad (Fake News) en redes sociales (PEC4)."
 authors = [{ name = "Tu Nombre", email = "tu@email.com" }]
 requires-python = ">=3.11"
 dependencies = [
@@ -19,13 +19,16 @@ dependencies = [
     "pyyaml>=6.0.0",
 ]
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "ruff>=0.3.0",
     "pytest>=8.0.0",
     "pre-commit>=3.6.0",
     "ipykernel>=6.29.0",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/deepsocial"]
 
 [tool.ruff]
 line-length = 100
