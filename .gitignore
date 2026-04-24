@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+build/
+dist/
+
+# Data & Models (Usar DVC en su lugar)
+data/raw/*
+data/processed/*
+!data/**/*.gitkeep
+models/*
+!models/**/*.gitkeep
+
+# IDEs
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints
